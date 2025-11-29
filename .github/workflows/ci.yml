@@ -1,0 +1,16 @@
+name: CI - Mon Premier Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Étape 1
+        run: echo "Hello CI"
+
+      - name: Étape 2
+        run: echo "Pipeline terminé"
