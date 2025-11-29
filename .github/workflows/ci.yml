@@ -1,8 +1,12 @@
 name: CI - Docker Build & Test
 
+# Triggers : push, pull_request et lancement manuel
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # permet de lancer manuellement
 
 jobs:
   docker-build:
