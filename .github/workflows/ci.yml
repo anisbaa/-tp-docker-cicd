@@ -70,3 +70,10 @@ jobs:
           echo "Test de /db"
           curl -f http://localhost:3000/db
 
+             # Étape 9 : Logs si échec
+      - name: Show logs on failure
+        if: failure()
+        run: |
+          echo "Logs des conteneurs :"
+          docker-compose logs
+
