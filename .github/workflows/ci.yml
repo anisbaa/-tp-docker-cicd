@@ -42,3 +42,31 @@ jobs:
       # Étape 6 : Stop & cleanup
       - name: Stop docker-compose
         run: docker-compose down
+              # Étape 7 : Attendre que le backend soit prêt
+      - name: Wait for backend
+        run: |
+          echo "Attente du backend (max 60s)..."
+          for i in {1..30}; do
+            if curl -f http://localhost:3000/api >/dev/null 2>&1; then
+              echo "Backend prêt !"
+              break
+            fi
+            echo "En attente... ($i/30)"
+            sleep 2
+          done
+          if [ $i -eq 30 ]; then
+            echo "Timeout : backend non démarré"
+            exit 1
+          fi
+
+      # Étape 8 : Tester les endpoints API
+      - name: Test API Endpoint
+        run: |
+          echo "Test de /api"
+          curl -f http://localhost:3000/api
+
+      - name: Test DB Endpoint
+        run: |
+          echo "Test de /db"
+          curl -f http://localhost:3000/db
+
